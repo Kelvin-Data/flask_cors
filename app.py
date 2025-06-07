@@ -5,9 +5,12 @@ def create_app():
     app = Flask(__name__)
     CORS(app)
 
-    @app.route('/')
-    def index():
-        return render_template('index.html')
+    # Allow CORS only for your Netlify frontend
+    CORS(app, resources={
+        r"/api/*": {
+            "origins": ["https://flask-cors.netlify.app"]
+        }
+    })
 
     @app.route('/api')
     def api():
